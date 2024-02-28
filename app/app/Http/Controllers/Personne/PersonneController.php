@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Personne;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Repositories\personne\ClientRepositorie;
-use Illuminate\Support\Str;
-use App\Models\Membre;
 use App\Models\Client;
+use App\Models\Membre;
+use App\Models\Formateur;
+use App\Models\Stagiaire;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
+use App\Repositories\personne\ClientRepositorie;
 
 
 
@@ -17,10 +19,10 @@ class PersonneController extends Controller
     // protected $membreRepositorie;
     // protected $clientRepositorie;
 
-   
+
     public function index(Request $request)
     {
-        
+
         $personnes = $this->getRepositorie()->paginate();
         $type = $this->getType();
         if ($request->ajax()) {
@@ -29,7 +31,7 @@ class PersonneController extends Controller
                 $searchQuery = str_replace(" ", "%", $searchQuery);
                 $methodName = 'search' . ucfirst($type);
                 $personnes = $this->getRepositorie()->{$methodName}($searchQuery);
-                
+
                 return view('personne.index', compact('personnes', 'type'))->render();
             }
         }
@@ -48,7 +50,7 @@ class PersonneController extends Controller
     {
         $data = $request->all();
         $type = $this->getType();
-        $personne =  $this->getRepositorie()->create($data);
+        $this->getRepositorie()->create($data);
         return redirect()->route($type.'.index')->with('success', $type.' a été ajoutée avec succès');
     }
 
@@ -70,14 +72,14 @@ class PersonneController extends Controller
     {
         $data = $request->all();
         $type = $this->getType();
-        $personne = $this->getRepositorie()->update($id, $data);
+        $this->getRepositorie()->update($id, $data);
         return back()->with('success', $type.' a été modifiée avec succès');
     }
 
-    public function delete(Request $request ,$id)
+    public function delete($id)
     {
         $type = $this->getType();
-        $personne = $this->getRepositorie()->delete($id);
+        $this->getRepositorie()->delete($id);
         return redirect()->route($type.'.index')->with('success', $type.' a été supprimée avec succès');
     }
 
@@ -88,10 +90,10 @@ class PersonneController extends Controller
         $modelRepository = $model.'Repositorie';
         $path = "\\App\\Repositories\\personne\\".$modelRepository;
 
-        if($model === 'Membre'){
-            $repository = new $path(new Membre);
-        }elseif($model === 'Client'){
-            $repository = new $path(new Client);
+        if($model === 'Formateur'){
+            $repository = new $path(new Formateur);
+        }elseif($model === 'Stagiaire'){
+            $repository = new $path(new Stagiaire);
         }
         return $repository;
     }

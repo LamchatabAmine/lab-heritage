@@ -1,5 +1,5 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <a href="{{ route('membre.index') }}" class="brand-link">
+    <a href="{{ route('stagiaire.index') }}" class="brand-link">
         <span class="brand-text font-weight-light">Gestion des personnes</span>
     </a>
 

@@ -1,14 +1,14 @@
 <li class="nav-item">
-    <a href="{{ route('membre.index') }}" class="nav-link {{ Request::is('membre.index') ? 'active' : '' }}">
+    <a href="{{ route('stagiaire.index') }}" class="nav-link {{ Request::is('stagiaire.index') ? 'active' : '' }}">
       <i class="nav-icon fas fa-users"></i>
-      <p>Membres</p>
+      <p>Stagiaire</p>
     </a>
 </li>
 
 <li class="nav-item">
-  <a href="{{ route('client.index') }}" class="nav-link {{ Request::is('client.index') ? 'active' : '' }}">
+  <a href="{{ route('formateur.index') }}" class="nav-link {{ Request::is('formateur.index') ? 'active' : '' }}">
     <i class="nav-icon fas fa-users"></i>
-    <p>Clients</p>
+    <p>Formateur</p>
   </a>
 </li>
 
